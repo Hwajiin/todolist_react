@@ -1,11 +1,28 @@
-import { createContext, useContext, useReducer, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import reducer, { initialState } from "./reducer";
+
+const TODO = "todo";
+const COMPLETED = "completed";
 
 const ToDosContext = createContext();
 
 const ToDosProvider = ({ children }) => {
-  // const [edit, setEdit] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    localStorage.setItem(TODO, JSON.stringify(state.toDos));
+  }, [state.toDos]);
+
+  useEffect(() => {
+    localStorage.setItem(COMPLETED, JSON.stringify(state.completed));
+  }, [state.completed]);
+
   return (
     <ToDosContext.Provider value={{ state, dispatch }}>
       {children}

@@ -1,10 +1,28 @@
 import { v4 as uuidv4 } from "uuid";
 import { ADD, DEL, COMPLETE, UNCOMPLETE, EDIT } from "./action";
 
+const TODO = "todo";
+const COMPLETED = "completed";
+
 export const initialState = {
-  toDos: [],
-  completed: [],
+  toDos:
+    JSON.parse(localStorage.getItem(TODO)) == null
+      ? []
+      : JSON.parse(localStorage.getItem(TODO)),
+  completed:
+    JSON.parse(localStorage.getItem(COMPLETED)) == null
+      ? []
+      : JSON.parse(localStorage.getItem(COMPLETED)),
 };
+
+// export const initialState = {
+//   toDos: [],
+//   completed: [],
+// };
+
+// export const initializer = (initialState) => {
+//   JSON.parse(localStorage.getItem(initialState.toDos));
+// };
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -50,7 +68,7 @@ const reducer = (state, action) => {
       } else {
         return {
           ...state,
-          toDos: state.toDos.map((todo) => ({
+          completed: state.completed.map((todo) => ({
             ...todo,
           })),
         };
