@@ -27,6 +27,7 @@ const Addform = ({ isEdit, id, setEdit, isPrivate }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if (newToDo === "") return;
     dispatch({ type: ADD, payload: newToDo });
     setNewToDo("");
   };
